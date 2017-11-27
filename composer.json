@@ -38,6 +38,6 @@
         "hasCpSettings": false,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/zacksleo/home-navbar/master/CHANGELOG.md",
-        "class": "moguyun\\plugins\\homenavbar\\Plugin"
+        "class": "moguyun\\plugins\\homenavbar\\HomeNavbar"
     }
 }
