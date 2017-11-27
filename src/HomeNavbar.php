@@ -2,6 +2,7 @@
 
 namespace moguyun\plugins\homenavbar;
 
+use yii;
 use moguyun\plugins\homenavbar\models\NavBtn;
 use zacksleo\yii2\plugin\components\Plugin as IPlugin;
 use zacksleo\yii2\plugin\models\PluginSetting;
@@ -35,13 +36,30 @@ class HomeNavbar extends IPlugin
 
     public function admincp()
     {
-        $models = [];
-        $buttons = PluginSetting::get($this->identify, 'buttons');
-        $buttons = json_decode($buttons, true);
-        foreach ($buttons as $button) {
-            $model = new NavBtn();
-            $model->attributes = $button;
-            $models[] = $model;
+        if (Yii::$app->request->isPost && isset($_POST['NavBtn'])) {
+            $errors = [];
+            $models = [];
+            foreach ($_POST['NavBtn'] as $attributes) {
+                $model = new NavBtn();
+                $model->attributes = $attributes;
+                $models[] = $model;
+                if (!$model->validate()) {
+                    $errors[] = $model->getFirstErrors();
+                }
+            }
+            if (!empty($errors)) {
+                $error = current(array_values(current($errors)));
+                Yii::$app->session->setFlash('error', $error);
+            }
+        } else {
+            $models = [];
+            $buttons = PluginSetting::get($this->identify, 'buttons');
+            $buttons = json_decode($buttons, true);
+            foreach ($buttons as $button) {
+                $model = new NavBtn();
+                $model->attributes = $button;
+                $models[] = $model;
+            }
         }
         return $this->render('admincp', [
             'models' => $models

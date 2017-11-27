@@ -21,7 +21,19 @@ class NavBtn extends Model
     public function rules()
     {
         return [
-            ['buttons', 'each', 'rule' => ['integer']],
+            [['title', 'url', 'image'], 'required'],
+            ['title', 'string', 'max' => 3],
+            ['url', 'url'],
+            ['image', 'file', 'extensions' => ['png', 'jpg', 'gif', 'jpeg'], 'maxSize' => 30 * 1024],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'title' => '名称',
+            'url' => '链接',
+            'image' => '图片'
         ];
     }
 }

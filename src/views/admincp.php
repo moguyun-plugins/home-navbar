@@ -23,7 +23,7 @@ use yii\bootstrap\ActiveForm;
         <div class="tab-content">
             <div id="tab-focus" class="tab-pane active">
                 <div class="form-body">
-                    <div class="text-info">建议大小1290×490</div>
+                    <div class="text-info">建议大小200×200</div>
 
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -33,7 +33,7 @@ use yii\bootstrap\ActiveForm;
                                 图片
                             </th>
                             <th width="25%">
-                                描述
+                                名称
                             </th>
                             <th>
                                 链接
@@ -46,16 +46,15 @@ use yii\bootstrap\ActiveForm;
                                 <td><?php echo $key + 1; ?></td>
                                 <td>
                                     <img src="<?= $model->image; ?>">
-                                    <?= $form->field($model, 'image')->fileInput(['options' => [
-                                        'accept' => 'image/*',
-                                    ]]);
-                                    ?>
+                                    <input type="file" id="navbtn-image" name="NavBtn[<?= $key; ?>][image]">
                                 </td>
                                 <td>
-                                    <?= $form->field($model, 'title')->textInput()->label(false); ?>
+                                    <input type="text" id="navbtn-title" class="form-control"
+                                           name="NavBtn[<?= $key; ?>][title]" value="<?= $model->title; ?>">
                                 </td>
                                 <td>
-                                    <?= $form->field($model, 'url')->textInput()->label(false); ?>
+                                    <input type="text" id="navbtn-url" class="form-control"
+                                           name="NavBtn[<?= $key; ?>][url]" value="<?= $model->url; ?>">
                                 </td>
                             </tr>
                         <?php endforeach; ?>
