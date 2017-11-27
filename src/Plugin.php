@@ -3,6 +3,7 @@
 namespace moguyun\plugins\homenavbar;
 
 use zacksleo\yii2\plugin\components\Plugin as IPlugin;
+use zacksleo\yii2\plugin\models\PluginSetting;
 
 class Plugin extends IPlugin
 {
@@ -29,5 +30,41 @@ class Plugin extends IPlugin
     public function homeNavbar()
     {
 
+    }
+
+    public function install()
+    {
+        $bars = [
+            [
+                'title' => '',
+                'url' => '',
+                'image' => '',
+            ],
+            [
+                'title' => '',
+                'url' => '',
+                'image' => '',
+            ],
+            [
+                'title' => '',
+                'url' => '',
+                'image' => '',
+            ],
+            [
+                'title' => '',
+                'url' => '',
+                'image' => '',
+            ],
+        ];
+        $this->setSetting('position', json_encode($bars));
+        return true;
+    }
+
+    public function uninstall()
+    {
+        PluginSetting::deleteAll([
+            'plugin' => $this->identify
+        ]);
+        return true;
     }
 }

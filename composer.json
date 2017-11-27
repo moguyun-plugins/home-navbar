@@ -20,9 +20,6 @@
             "homepage": "zacksleo.github.io"
         }
     ],
-    "require": {
-        "zacksleo/yii2-plugin": "^1.2"
-    },
     "repositories": [
         {
             "type": "composer",
@@ -41,6 +38,6 @@
         "hasCpSettings": false,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/zacksleo/home-navbar/master/CHANGELOG.md",
-        "class": "moguyun\\plugins\\homenavbar\\Homenavbar"
+        "class": "moguyun\\plugins\\homenavbar\\Plugin"
     }
 }
