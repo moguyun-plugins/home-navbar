@@ -3,6 +3,7 @@
 namespace moguyun\plugins\homenavbar\models;
 
 use yii\base\Model;
+use yii\web\UploadedFile;
 
 /**
  * Class NavBtn
@@ -21,7 +22,7 @@ class NavBtn extends Model
     public function rules()
     {
         return [
-            [['title', 'url', 'image'], 'required'],
+            [['title', 'url'], 'required'],
             ['title', 'string', 'max' => 3],
             ['url', 'url'],
             ['image', 'file', 'extensions' => ['png', 'jpg', 'gif', 'jpeg'], 'maxSize' => 30 * 1024],
@@ -35,5 +36,33 @@ class NavBtn extends Model
             'url' => '链接',
             'image' => '图片'
         ];
+    }
+
+    /**
+     * @param $file UploadedFile
+     * @return string
+     */
+    public function upload($file)
+    {
+        $savePath = date('Ymd') . '/';
+        $absPath = \Yii::getAlias('@frontend') . '/web/uploads/' . $savePath;
+        if (!file_exists($absPath)) {
+            mkdir($absPath);
+        }
+        $filename = uniqid() . '.' . $file->extension;
+        $file->saveAs($absPath . $filename);
+        return $savePath . $filename;
+    }
+
+    public function getSavePath($category = null)
+    {
+        $path = '';
+        if ($category) {
+            $path = $path . $category . '/';
+        }
+        if ($this->timeDir) {
+            $path = $path . date('Ymd') . '/';
+        }
+        return $path;
     }
 }

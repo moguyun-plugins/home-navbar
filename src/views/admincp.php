@@ -17,7 +17,8 @@ use yii\bootstrap\ActiveForm;
     <div class="portlet-body">
         <?php $form = ActiveForm::begin([
             'options' => [
-                'class' => 'portlet light'
+                'class' => 'portlet light',
+                'enctype' => 'multipart/form-data',
             ]
         ]); ?>
         <div class="tab-content">
@@ -45,8 +46,8 @@ use yii\bootstrap\ActiveForm;
                             <tr>
                                 <td><?php echo $key + 1; ?></td>
                                 <td>
-                                    <img src="<?= $model->image; ?>">
-                                    <input type="file" id="navbtn-image" name="NavBtn[<?= $key; ?>][image]">
+                                    <img src="/uploads/<?= $model->image; ?>" width="40">
+                                    <input type="file" id="navbtn-image" name="images[]">
                                 </td>
                                 <td>
                                     <input type="text" id="navbtn-title" class="form-control"

@@ -6,6 +6,7 @@ use yii;
 use moguyun\plugins\homenavbar\models\NavBtn;
 use zacksleo\yii2\plugin\components\Plugin as IPlugin;
 use zacksleo\yii2\plugin\models\PluginSetting;
+use yii\web\UploadedFile;
 
 class HomeNavbar extends IPlugin
 {
@@ -31,7 +32,11 @@ class HomeNavbar extends IPlugin
 
     public function homeNavbar()
     {
-
+        $buttons = PluginSetting::get($this->identify, 'buttons');
+        $buttons = json_decode($buttons, true);
+        return $this->render('buttons', [
+            'buttons' => $buttons
+        ]);
     }
 
     public function admincp()
@@ -50,6 +55,20 @@ class HomeNavbar extends IPlugin
             if (!empty($errors)) {
                 $error = current(array_values(current($errors)));
                 Yii::$app->session->setFlash('error', $error);
+            } else {
+                $buttons = [];
+                $images = UploadedFile::getInstancesByName('images');
+                foreach ($models as $key => $model) {
+                    $image = $model->upload($images[$key]);
+                    $buttons[] = [
+                        'title' => $model->title,
+                        'url' => $model->url,
+                        'image' => $image,
+                    ];
+                }
+                $this->setSetting('buttons', json_encode($buttons));
+                Yii::$app->session->setFlash('success', '设置成功');
+                $this->refresh();
             }
         } else {
             $models = [];
