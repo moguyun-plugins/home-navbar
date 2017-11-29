@@ -23,7 +23,7 @@ class NavBtn extends Model
     {
         return [
             [['title', 'url'], 'required'],
-            ['title', 'string', 'max' => 3],
+            ['title', 'string', 'max' => 8],
             ['url', 'url'],
             ['image', 'file', 'extensions' => ['png', 'jpg', 'gif', 'jpeg'], 'maxSize' => 30 * 1024],
         ];
